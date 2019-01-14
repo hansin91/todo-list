@@ -68,6 +68,7 @@ appendTodo = (todo) => {
 	if (checkAll.hasClass('hide')) {
 		checkAll.removeClass('hide');
 	}
+	$('#todolist #check-all-todo').prop('checked', false);
 };
 
 $(function() {
@@ -80,7 +81,6 @@ $(function() {
 			let inputTodo = $(this).val();
 			const obj = addTodo(todos, inputTodo);
 			appendTodo(obj);
-			$('#check-all-todo').removeAttr('checked');
 		}
 	});
 
@@ -89,7 +89,6 @@ $(function() {
 		let inputTodo = $('#input-todo').val();
 		const obj = addTodo(todos, inputTodo);
 		appendTodo(obj);
-		$('#check-all-todo').removeAttr('checked');
 	});
 
 	$('#todolist').on('click', '.icon-delete', function(e) {
@@ -112,10 +111,10 @@ $(function() {
 	$('#todolist').on('change', '#check-all-todo', function() {
 		if ($(this).is(':checked')) {
 			todos.map((todo) => (todo.completed = true));
-			$('#todolist .delete-check').attr('checked', true);
+			$('#todolist .delete-check').prop('checked', true);
 		} else {
 			todos.map((todo) => (todo.completed = false));
-			$('#todolist .delete-check').removeAttr('checked');
+			$('#todolist .delete-check').prop('checked', false);
 		}
 		localStorage.setItem('todos', JSON.stringify(todos));
 	});
@@ -129,6 +128,7 @@ $(function() {
 			}
 		}
 		localStorage.setItem('todos', JSON.stringify(todos));
+		$('#todolist #check-all-todo').prop('checked', false);
 		displayTodos(todos);
 	});
 });
